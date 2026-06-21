@@ -1,0 +1,156 @@
+.layout {
+  grid-template-columns: 280px 1fr;
+}
+
+.side-column {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  position: sticky;
+  top: 90px;
+}
+
+.today-panel {
+  padding: 14px;
+}
+
+.side-title {
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.today-list {
+  display: grid;
+  gap: 8px;
+}
+
+.today-item {
+  width: 100%;
+  border: 1px solid color-mix(in srgb, var(--task-color, var(--accent)) 36%, var(--line));
+  background: color-mix(in srgb, var(--task-color, var(--accent)) 10%, var(--surface));
+  color: var(--text);
+  border-radius: 10px;
+  padding: 9px 10px;
+  text-align: left;
+}
+
+.today-item:hover {
+  background: color-mix(in srgb, var(--task-color, var(--accent)) 16%, var(--surface));
+}
+
+.today-item-title {
+  display: block;
+  font-weight: 650;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.today-item-meta {
+  color: var(--muted);
+  display: block;
+  font-size: 12px;
+  margin-top: 3px;
+}
+
+.calendar-grid,
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(96px, 1fr));
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.week-grid .day-cell {
+  min-height: 560px;
+}
+
+.day-cell {
+  padding: 8px 0;
+  overflow: hidden;
+}
+
+.calendar-slot {
+  height: 27px;
+  margin: 3px 0;
+  padding: 0;
+}
+
+.event-pill {
+  display: block;
+  height: 25px;
+  border: 1px solid color-mix(in srgb, var(--task-color, var(--accent)) 48%, var(--line));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--task-color, var(--accent)) 18%, var(--surface));
+  color: var(--text);
+  padding: 4px 7px;
+  margin: 0 4px;
+  text-align: left;
+  font-size: 12px;
+  line-height: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.event-pill:hover {
+  background: color-mix(in srgb, var(--task-color, var(--accent)) 25%, var(--surface));
+}
+
+.event-pill.segment-single {
+  width: calc(100% - 8px);
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.event-pill.segment-start {
+  width: calc(100% - 4px);
+  margin-right: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.event-pill.segment-middle {
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  border-radius: 0;
+  border-left-color: transparent;
+  border-right-color: transparent;
+}
+
+.event-pill.segment-end {
+  width: calc(100% - 4px);
+  margin-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.event-pill.done {
+  opacity: .56;
+  text-decoration: line-through;
+}
+
+.more-count {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 6px 8px 0;
+}
+
+.today-empty {
+  padding: 18px 12px;
+}
+
+@media (max-width: 900px) {
+  .side-column {
+    position: static;
+  }
+
+  .week-grid .day-cell {
+    min-height: 360px;
+  }
+}
