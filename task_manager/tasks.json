@@ -1,0 +1,51 @@
+{
+  "settings": {
+    "theme": "system",
+    "accent": "#1a73e8",
+    "density": "comfortable",
+    "calendarStart": "monday",
+    "notifications": true
+  },
+  "tasks": [
+    {
+      "id": "sample-001",
+      "title": "サンプルタスク",
+      "detail": "名称をクリックすると詳細編集画面を開きます。このデータはtasks.jsonに保存されます。",
+      "startDate": "2026-06-21",
+      "startTime": "09:00",
+      "endDate": "2026-06-21",
+      "endTime": "18:00",
+      "remindMinutes": "30",
+      "urgency": "normal",
+      "color": "#1a73e8",
+      "done": false,
+      "repeat": {
+        "frequency": "none",
+        "interval": 1,
+        "until": ""
+      },
+      "createdAt": "2026-06-21T00:00:00.000Z",
+      "updatedAt": "2026-06-21T00:00:00.000Z"
+    },
+    {
+      "id": "sample-002",
+      "title": "複数日予定のサンプル",
+      "detail": "開始日と終了日を別日にすると、カレンダー上で各日に表示されます。",
+      "startDate": "2026-06-24",
+      "startTime": "",
+      "endDate": "2026-06-26",
+      "endTime": "",
+      "remindMinutes": "",
+      "urgency": "high",
+      "color": "#188038",
+      "done": false,
+      "repeat": {
+        "frequency": "none",
+        "interval": 1,
+        "until": ""
+      },
+      "createdAt": "2026-06-21T00:00:00.000Z",
+      "updatedAt": "2026-06-21T00:00:00.000Z"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "name": "local-task-manager",
+  "version": "1.0.0",
+  "description": "Local JSON task manager for desktop use.",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win portable",
+    "dist:dir": "electron-builder --dir"
+  },
+  "devDependencies": {
+    "electron": "^31.7.7",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "local.task.manager",
+    "productName": "Local Task Manager",
+    "files": [
+      "main.js",
+      "preload.js",
+      "index.html",
+      "style.css",
+      "app.js",
+      "tasks.json",
+      "README.txt"
+    ],
+    "win": {
+      "target": [
+        "portable"
+      ]
+    },
+    "portable": {
+      "artifactName": "LocalTaskManager.exe"
+    }
+  }
+}

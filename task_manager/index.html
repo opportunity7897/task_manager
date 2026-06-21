@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Local Task Manager</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="app-bar">
+    <div class="brand">
+      <div class="brand-mark"></div>
+      <div>
+        <div class="brand-title">Local Task Manager</div>
+        <div class="brand-subtitle" id="dataPathLabel">tasks.json</div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <button class="segmented active" id="listViewButton" type="button">一覧</button>
+      <button class="segmented" id="calendarViewButton" type="button">カレンダー</button>
+      <button class="button secondary" id="settingsButton" type="button">設定</button>
+      <button class="button primary" id="newTaskButton" type="button">新規作成</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel filters">
+      <input id="searchInput" class="input" type="search" placeholder="名称・詳細で検索">
+      <select id="statusFilter" class="input">
+        <option value="all">すべて</option>
+        <option value="open">未完了</option>
+        <option value="done">完了</option>
+        <option value="overdue">期限超過</option>
+      </select>
+      <select id="urgencyFilter" class="input">
+        <option value="all">緊急度すべて</option>
+        <option value="low">低</option>
+        <option value="normal">通常</option>
+        <option value="high">高</option>
+        <option value="critical">最優先</option>
+      </select>
+    </section>
+
+    <section id="listView" class="panel content-panel">
+      <div class="section-head">
+        <div>
+          <h1>タスク一覧</h1>
+          <p id="listSummary"></p>
+        </div>
+      </div>
+      <div id="taskList" class="task-list"></div>
+    </section>
+
+    <section id="calendarView" class="panel content-panel hidden">
+      <div class="calendar-head">
+        <button class="icon-button" id="prevMonthButton" type="button" aria-label="前月">‹</button>
+        <div>
+          <h1 id="calendarTitle">カレンダー</h1>
+          <p id="calendarSummary"></p>
+        </div>
+        <button class="icon-button" id="nextMonthButton" type="button" aria-label="翌月">›</button>
+        <button class="button secondary" id="todayButton" type="button">今日</button>
+      </div>
+      <div id="calendarGrid" class="calendar-grid"></div>
+    </section>
+  </main>
+
+  <dialog id="taskDialog" class="dialog">
+    <form id="taskForm" method="dialog" class="dialog-card">
+      <div class="dialog-head">
+        <h2 id="taskDialogTitle">タスク</h2>
+        <button class="icon-button" type="button" data-close-dialog>×</button>
+      </div>
+
+      <input type="hidden" id="taskId">
+
+      <label class="field">
+        <span>名称</span>
+        <input id="titleInput" class="input" required maxlength="120">
+      </label>
+
+      <label class="field">
+        <span>詳細</span>
+        <textarea id="detailInput" class="input textarea" rows="5"></textarea>
+      </label>
+
+      <div class="grid-2">
+        <label class="field">
+          <span>開始日</span>
+          <input id="startDateInput" class="input" type="date" required>
+        </label>
+        <label class="field">
+          <span>開始時間</span>
+          <input id="startTimeInput" class="input" type="time">
+        </label>
+        <label class="field">
+          <span>終了日または期限</span>
+          <input id="endDateInput" class="input" type="date" required>
+        </label>
+        <label class="field">
+          <span>終了時間</span>
+          <input id="endTimeInput" class="input" type="time">
+        </label>
+      </div>
+
+      <div class="grid-3">
+        <label class="field">
+          <span>リマインド</span>
+          <select id="remindInput" class="input">
+            <option value="">なし</option>
+            <option value="0">期限時刻</option>
+            <option value="5">5分前</option>
+            <option value="10">10分前</option>
+            <option value="30">30分前</option>
+            <option value="60">1時間前</option>
+            <option value="1440">1日前</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>緊急度</span>
+          <select id="urgencyInput" class="input">
+            <option value="low">低</option>
+            <option value="normal" selected>通常</option>
+            <option value="high">高</option>
+            <option value="critical">最優先</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>色</span>
+          <input id="colorInput" class="input color-input" type="color" value="#1a73e8">
+        </label>
+      </div>
+
+      <div class="grid-3">
+        <label class="field">
+          <span>定期実行</span>
+          <select id="repeatInput" class="input">
+            <option value="none">なし</option>
+            <option value="daily">毎日</option>
+            <option value="weekly">毎週</option>
+            <option value="monthly">毎月</option>
+            <option value="yearly">毎年</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>間隔</span>
+          <input id="intervalInput" class="input" type="number" min="1" max="365" value="1">
+        </label>
+        <label class="field">
+          <span>繰り返し終了日</span>
+          <input id="repeatUntilInput" class="input" type="date">
+        </label>
+      </div>
+
+      <label class="check-row">
+        <input id="doneInput" type="checkbox">
+        <span>完了済みにする</span>
+      </label>
+
+      <div class="dialog-actions">
+        <button class="button danger" id="deleteTaskButton" type="button">削除</button>
+        <span class="spacer"></span>
+        <button class="button secondary" type="button" data-close-dialog>キャンセル</button>
+        <button class="button primary" id="saveTaskButton" type="submit">保存</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="settingsDialog" class="dialog">
+    <form id="settingsForm" method="dialog" class="dialog-card">
+      <div class="dialog-head">
+        <h2>設定</h2>
+        <button class="icon-button" type="button" data-close-dialog>×</button>
+      </div>
+
+      <label class="field">
+        <span>カラーモード</span>
+        <select id="themeInput" class="input">
+          <option value="system">システムに合わせる</option>
+          <option value="light">ライト</option>
+          <option value="dark">ダーク</option>
+        </select>
+      </label>
+
+      <label class="field">
+        <span>アクセントカラー</span>
+        <input id="accentInput" class="input color-input" type="color">
+      </label>
+
+      <label class="field">
+        <span>表示密度</span>
+        <select id="densityInput" class="input">
+          <option value="comfortable">標準</option>
+          <option value="compact">コンパクト</option>
+        </select>
+      </label>
+
+      <label class="field">
+        <span>カレンダー週開始</span>
+        <select id="calendarStartInput" class="input">
+          <option value="monday">月曜日</option>
+          <option value="sunday">日曜日</option>
+        </select>
+      </label>
+
+      <label class="check-row">
+        <input id="notificationsInput" type="checkbox">
+        <span>アプリ通知を使用する</span>
+      </label>
+
+      <div class="dialog-actions">
+        <span class="spacer"></span>
+        <button class="button secondary" type="button" data-close-dialog>キャンセル</button>
+        <button class="button primary" type="submit">保存</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
