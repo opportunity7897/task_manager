@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Local Task Manager</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="patch.css">
 </head>
 <body>
   <header class="app-bar">
@@ -12,12 +13,13 @@
       <div class="brand-mark"></div>
       <div>
         <div class="brand-title">Local Task Manager</div>
-        <div class="brand-subtitle" id="dataPathLabel">tasks.json</div>
+        <div class="brand-subtitle" id="dataPathLabel">ローカルJSON保存</div>
       </div>
     </div>
 
     <div class="toolbar">
       <button class="segmented active" id="listViewButton" type="button">一覧</button>
+      <button class="segmented" id="weekViewButton" type="button">週</button>
       <button class="segmented" id="calendarViewButton" type="button">カレンダー</button>
       <button class="button secondary" id="settingsButton" type="button">設定</button>
       <button class="button primary" id="newTaskButton" type="button">新規作成</button>
@@ -25,22 +27,29 @@
   </header>
 
   <main class="layout">
-    <section class="panel filters">
-      <input id="searchInput" class="input" type="search" placeholder="名称・詳細で検索">
-      <select id="statusFilter" class="input">
-        <option value="all">すべて</option>
-        <option value="open">未完了</option>
-        <option value="done">完了</option>
-        <option value="overdue">期限超過</option>
-      </select>
-      <select id="urgencyFilter" class="input">
-        <option value="all">緊急度すべて</option>
-        <option value="low">低</option>
-        <option value="normal">通常</option>
-        <option value="high">高</option>
-        <option value="critical">最優先</option>
-      </select>
-    </section>
+    <aside class="side-column">
+      <section class="panel filters">
+        <input id="searchInput" class="input" type="search" placeholder="名称・詳細で検索">
+        <select id="statusFilter" class="input">
+          <option value="all">すべて</option>
+          <option value="open">未完了</option>
+          <option value="done">完了</option>
+          <option value="overdue">期限超過</option>
+        </select>
+        <select id="urgencyFilter" class="input">
+          <option value="all">緊急度すべて</option>
+          <option value="low">低</option>
+          <option value="normal">通常</option>
+          <option value="high">高</option>
+          <option value="critical">最優先</option>
+        </select>
+      </section>
+
+      <section class="panel today-panel">
+        <div class="side-title">今日の予定</div>
+        <div id="todayList" class="today-list"></div>
+      </section>
+    </aside>
 
     <section id="listView" class="panel content-panel">
       <div class="section-head">
@@ -52,6 +61,19 @@
       <div id="taskList" class="task-list"></div>
     </section>
 
+    <section id="weekView" class="panel content-panel hidden">
+      <div class="calendar-head">
+        <button class="icon-button" id="prevWeekButton" type="button" aria-label="前週">‹</button>
+        <div>
+          <h1 id="weekTitle">週</h1>
+          <p id="weekSummary"></p>
+        </div>
+        <button class="icon-button" id="nextWeekButton" type="button" aria-label="翌週">›</button>
+        <button class="button secondary" id="weekTodayButton" type="button">今週</button>
+      </div>
+      <div id="weekGrid" class="week-grid"></div>
+    </section>
+
     <section id="calendarView" class="panel content-panel hidden">
       <div class="calendar-head">
         <button class="icon-button" id="prevMonthButton" type="button" aria-label="前月">‹</button>
@@ -60,7 +82,7 @@
           <p id="calendarSummary"></p>
         </div>
         <button class="icon-button" id="nextMonthButton" type="button" aria-label="翌月">›</button>
-        <button class="button secondary" id="todayButton" type="button">今日</button>
+        <button class="button secondary" id="todayButton" type="button">今月</button>
       </div>
       <div id="calendarGrid" class="calendar-grid"></div>
     </section>
@@ -220,5 +242,6 @@
   <div id="toast" class="toast hidden"></div>
 
   <script src="app.js"></script>
+  <script src="patch.js"></script>
 </body>
 </html>
